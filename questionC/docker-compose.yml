@@ -1,0 +1,11 @@
+version: '2'
+services:
+    redisa:
+        image: redis
+        ports:
+            - "6379:6379"
+    eureka:
+        build: ./eureka
+        image: eureka:latest
+        ports:
+            - "8080:8080"

@@ -1,8 +1,17 @@
+#!/usr/bin/env python3
+
 from flask import Flask
 from redis import Redis
+from eureka.client import EurekaClient
 
 app = Flask(__name__)
-redis = Redis(host='redis', port=6379)
+redis = Redis(host='localhost', port=6379)
+
+ec = EurekaClient("redisagent1",
+                  eureka_domain_name="http://localhost:8080/",
+                  region="eu-west-1",
+                  vip_address="http://localhost:5000/",
+                  port=8080)
 
 @app.route('/')
 def hello():
@@ -11,4 +20,4 @@ def hello():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
