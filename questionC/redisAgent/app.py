@@ -2,16 +2,15 @@
 
 from flask import Flask
 from redis import Redis
-from eureka.client import EurekaClient
+import py_eureka_client.eureka_client as eureka_client
 
 app = Flask(__name__)
 redis = Redis(host='localhost', port=6379)
 
-ec = EurekaClient("redisagent1",
-                  eureka_domain_name="http://localhost:8080/",
-                  region="eu-west-1",
-                  vip_address="http://localhost:5000/",
-                  port=8080)
+eureka_client.init(eureka_server="http://localhost:8080/eureka/v2",
+                   app_name="redisagent1",
+                   instance_port=5000,
+                   regions='us-west-1')
 
 @app.route('/')
 def hello():
